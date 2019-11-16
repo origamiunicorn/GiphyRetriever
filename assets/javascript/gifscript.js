@@ -2,6 +2,8 @@ var topics = ["Aardvark", "Elephant", "Rainstorm"];
 
 function displayTopicGifs() {
     var topic = $(this).attr("data-topic");
+    $("#retrievedGifs").empty();
+
     console.log(topic);
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
         topic + "&api_key=Sk691sxiwZCXghJC3KzxBALR0DPLYXLm&limit=10";
@@ -16,18 +18,36 @@ function displayTopicGifs() {
             var results = response.data;
 
             for (var i = 0; i < results.length; i++) {
-                var gifDiv = $("<div>");
+                // var gifDiv = $("<div>");
                 var rating = results[i].rating;
-                var p = $("<p>").text("Rating: " + rating);
-                var gifImage = $("<img>");
-                gifImage.attr("src", results[i].images.fixed_height.url);
-
-                gifDiv.prepend(p);
-                gifDiv.prepend(gifImage);
-
-                $("#retrievedGifs").prepend(gifDiv);
+                // var p = $("<p>").text("Rating: " + rating);
+                // var gifImage = $("<img>");
+                var still = results[i].images.fixed_height_still.url;
+                var animate = results[i].images.fixed_height.url;
+                // gifImage.attr("data-state", "still");
+                // gifImage.attr("data-animate", animate);
+                // gifImage.attr("data-still", still);
+                // fixed_height_still
+                // gifDiv.prepend(p);
+                // gifDiv.prepend(gifImage);
+                buildAGif(rating, still, animate);
+                // $("#retrievedGifs").prepend(gifDiv);
             }
         });
+};
+
+function buildAGif(rating, still, animate) {
+    var gifDiv = $("<div>");
+    var p = $("<p>").text("Rating: " + rating);
+    var gifImage = $("<img>");
+    gifImage.attr("src", still);
+    gifImage.attr("data-state", "still");
+    gifImage.attr("data-animate", animate);
+    gifImage.attr("data-still", still);
+    gifDiv.prepend(p);
+    gifDiv.prepend(gifImage);
+
+    $("#retrievedGifs").prepend(gifDiv);
 };
 
 function renderButtons() {
