@@ -82,7 +82,7 @@ button, #add-gif {
   }
 
   #scrollButton:active {
-    background-color: #555;
+    background-color: #82DDF0;
   }
 
   #scrollButton.show {
@@ -94,6 +94,10 @@ textarea {
     width: auto;
     margin: 0;
     padding: 5px;
+}
+
+#gifForm {
+    font-size: 1.5em;
 }
 
 #gifInput {

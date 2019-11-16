@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var topics = ["Aardvark", "Elephant", "Rainstorm"];
+    var topics = ["Oh Snap", "Elephant", "Rainstorm"];
     var moreGifs;
     var offset = 10;
 
@@ -85,6 +85,7 @@ $(document).ready(function () {
             $("#buttonDiv").append("<button>" + gifSearchTerm + "</button>");
             topics.push(gifSearchTerm);
             console.log(topics);
+
             $("#gif-input").val("");
         };
 
