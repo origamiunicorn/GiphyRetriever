@@ -1,34 +1,6 @@
 var topics = ["Aardvark", "Elephant", "Rainstorm"];
 
-function renderButtons() {
-    $("#buttonDiv").empty();
-
-    for (var i = 0; i < topics.length; i++) {
-        var a = $("<button>");
-        a.addClass("gifTopic");
-        a.attr("data-topic", topics[i]);
-        a.text(topics[i]);
-        $("#buttonDiv").append(a);
-    }
-}
-
-// This function handles events where one button is clicked
-$("#add-gif").on("click", function () {
-    event.preventDefault();
-
-    var gifSearchTerm = $("#gif-input").val().trim();
-
-    if (!topics.includes(gifSearchTerm)) {
-        $("#buttonDiv").append("<button>" + gifSearchTerm + "</button>");
-        topics.push(gifSearchTerm);
-        $("#gif-input").val("");
-    };
-
-    renderButtons();
-
-});
-
-$("button").on("click", function () {
+function displayTopicGifs() {
     var topic = $(this).attr("data-topic");
     console.log(topic);
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -40,6 +12,7 @@ $("button").on("click", function () {
         method: "GET"
     })
         .then(function (response) {
+            console.log(response);
             var results = response.data;
 
             for (var i = 0; i < results.length; i++) {
@@ -55,7 +28,39 @@ $("button").on("click", function () {
                 $("#retrievedGifs").prepend(gifDiv);
             }
         });
+};
+
+function renderButtons() {
+    $("#buttonDiv").empty();
+
+    for (var i = 0; i < topics.length; i++) {
+        var a = $("<button>");
+        a.addClass("gifTopic");
+        a.attr("data-topic", topics[i]);
+        a.text(topics[i]);
+        console.log(a);
+        $("#buttonDiv").append(a);
+    }
+}
+
+// Handle when the add new animal button is clicked
+$("#add-gif").on("click", function () {
+    event.preventDefault();
+
+    var gifSearchTerm = $("#gif-input").val().trim();
+
+    if (!topics.includes(gifSearchTerm)) {
+        $("#buttonDiv").append("<button>" + gifSearchTerm + "</button>");
+        topics.push(gifSearchTerm);
+        console.log(topics);
+        $("#gif-input").val("");
+    };
+
+    renderButtons();
+
 });
 
 // Calling the renderButtons function to display the initial gif search terms
 renderButtons();
+
+$(document).on("click", ".gifTopic", displayTopicGifs);
