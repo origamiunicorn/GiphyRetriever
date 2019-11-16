@@ -7,23 +7,32 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Alata&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="./assets/css/styling.css" />
 
 </head>
 
 <body>
     <div id="container">
-        <h1>Gify Retriever</h1>
-        <div id="buttonDiv"></div>
-        <div id="makeNewButtonDiv">
-            <form id="gif-form">
-                <label for="gif-input">Add an animal!</label>
-                <input type="text" id="gif-input"><br>
-
-                <input id="add-gif" type="submit" value="Add New Animal!">
-            </form>
+        <div id="header">
+            <div id="image"></div>
+            <div id="text">Gify Retriever</div>
         </div>
-        <div id="retrievedGifs"></div>
+        <div id="buttonDiv"></div>
+        <div id="displayDivs">
+            <div id="makeNewButtonDiv">
+                <form id="gif-form">
+                    <label for="gif-input">Retrieve Gifs About...</label><br />
+                    <input type="text" id="gif-input"><br />
+
+                    <input id="add-gif" type="submit" value="Retrieve New Gifs!">
+                </form>
+            </div>
+            <div id="retrievedGifs"></div>
+        </div>
+        <div id="addMore">
+            <button id="moreGifs">Retrieve 10 More Gifs</button>
+        </div>
     </div>
 
     <script type="text/javascript" src="assets/javascript/gifscript.js"></script>

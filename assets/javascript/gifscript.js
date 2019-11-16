@@ -1,12 +1,16 @@
 var topics = ["Aardvark", "Elephant", "Rainstorm"];
+var moreGifs;
+var offset = 10;
 
 function displayTopicGifs() {
     var topic = $(this).attr("data-topic");
     $("#retrievedGifs").empty();
+    moreGifs = topic;
+    checkOffset();
 
     console.log(topic);
     var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
-        topic + "&api_key=Sk691sxiwZCXghJC3KzxBALR0DPLYXLm&limit=10";
+        topic + "&api_key=Sk691sxiwZCXghJC3KzxBALR0DPLYXLm&limit=10&offset=0";
     console.log(queryURL);
 
     $.ajax({
@@ -27,9 +31,15 @@ function displayTopicGifs() {
         });
 };
 
+function checkOffset() {
+    if (offset > 10) {
+        offset = 10;
+    }
+}
+
 function buildAGif(rating, still, animate) {
-    var gifDiv = $("<div>");
-    var p = $("<p>").text("Rating: " + rating);
+    var gifDiv = $("<div>").addClass("gifDiv");
+    var p = $("<p>").text("Rating: " + rating.toUpperCase());
     var gifImage = $("<img>");
     gifImage.addClass("gif");
     gifImage.attr("src", still);
@@ -39,7 +49,7 @@ function buildAGif(rating, still, animate) {
     gifDiv.prepend(p);
     gifDiv.prepend(gifImage);
 
-    $("#retrievedGifs").prepend(gifDiv);
+    $("#retrievedGifs").append(gifDiv);
 };
 
 // Render the buttons at the top of screen. Runs each time a button is added. Is where to look for doing localStorage versions to remember buttons rendered. If do this, may want a "clear" ability too? Reset the stored stringifyied array to the default, etc.
@@ -87,9 +97,34 @@ function runAnimation() {
     }
 };
 
+function addMoreGifs() {
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+        moreGifs + "&api_key=Sk691sxiwZCXghJC3KzxBALR0DPLYXLm&limit=10&offset=" + offset;
+    console.log("addMoreGifs offset is: " + offset);
+    console.log("addMoreGifs moreGifs is: " + moreGifs);
+
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    })
+        .then(function (response) {
+            var results = response.data;
+
+            for (var i = 0; i < results.length; i++) {
+                var rating = results[i].rating;
+                var still = results[i].images.fixed_height_still.url;
+                var animate = results[i].images.fixed_height.url;
+
+                buildAGif(rating, still, animate);
+            }
+        });
+    offset = offset + 10;
+}
+
 // Calling the renderButtons function to display the initial gif search terms
 renderButtons();
 
 // Event listener on click of any class gifTopic element, then run displayTopicGifs function.
 $(document).on("click", ".gifTopic", displayTopicGifs);
 $(document).on("click", ".gif", runAnimation);
+$(document).on("click", "#moreGifs", addMoreGifs);
