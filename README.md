@@ -1,4 +1,6 @@
 # Giphy Retriever
+Link to live site: https://origamiunicorn.github.io/GiphyRetriever/
+
 Giphy Retriever allows for users to generate gifs based on search terms they input into the provided textbox through frontend use of the Giphy API. This is all part of a homework assignment for UCLA's Fullstack Web Development Coding Bootcamp (September 2019 to March 2020). In particular, this assignment is asking for DOM manipulation and querying of an API to generate interactivity on page.
 
 The page loads with several default buttons already generated. A user may select any button and be provided with ten gifs matching the label on the button in the space below where the buttons are displayed. Each gif offers a rating and a textarea containing the "Gif URL" for linking purposes, allowing a user to select and copy the gif URL to share. This field is read only, so users will not be able to alter the text within.
